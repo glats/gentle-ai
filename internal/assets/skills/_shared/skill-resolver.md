@@ -62,7 +62,7 @@ From the registry's **Compact Rules** section, copy the matching skill blocks di
 
 This goes BEFORE the sub-agent's task-specific instructions, so standards are loaded before work begins.
 
-**Key rule**: inject the COMPACT RULES text, not paths. The sub-agent should NOT read any SKILL.md files — the rules arrive pre-digested in its prompt.
+**Key rule**: inject the COMPACT RULES text, not paths. The sub-agent still reads its assigned executor/phase skill, but should NOT independently discover or load additional project/user SKILL.md files during normal runtime — those rules arrive pre-digested in its prompt.
 
 ### Step 4: Include Project Conventions
 
@@ -95,8 +95,8 @@ This protocol is compaction-safe because:
 Sub-agents MUST report their skill resolution status in their return envelope:
 
 - `injected` — received `## Project Standards (auto-resolved)` from the orchestrator (ideal path)
-- `fallback-registry` — no standards received, self-loaded from skill registry
-- `fallback-path` — no standards received, loaded via `SKILL: Load` path
+- `fallback-registry` — no standards received, self-loaded compact rules from the skill registry as a degraded self-healing fallback
+- `fallback-path` — no standards received, loaded explicit `SKILL: Load` paths as a degraded self-healing fallback
 - `none` — no skills loaded at all
 
 **Orchestrator self-correction rule**: if a sub-agent reports anything other than `injected`, the orchestrator MUST:

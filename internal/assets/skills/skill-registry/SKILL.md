@@ -9,7 +9,7 @@ metadata:
 
 ## Purpose
 
-You generate or update the **skill registry** — a catalog of all available skills with **compact rules** (pre-digested, 5-15 line summaries) that any delegator injects directly into sub-agent prompts. Sub-agents do NOT read the registry or individual SKILL.md files — they receive compact rules pre-resolved in their launch prompt.
+You generate or update the **skill registry** — a catalog of all available skills with **compact rules** (pre-digested, 5-15 line summaries) that any delegator injects directly into sub-agent prompts. Sub-agents still read their assigned executor/phase skill. During normal runtime, they do NOT independently discover or load additional project/user SKILL.md files or the registry — they receive compact rules pre-resolved in their launch prompt.
 
 This is the foundation of the **Skill Resolver Protocol** (see `_shared/skill-resolver.md`). The registry is built ONCE (expensive), then read cheaply at every delegation.
 
@@ -98,7 +98,7 @@ Build the registry markdown:
 ```markdown
 # Skill Registry
 
-**Delegator use only.** Any agent that launches sub-agents reads this registry to resolve compact rules, then injects them directly into sub-agent prompts. Sub-agents do NOT read this registry or individual SKILL.md files.
+**Delegator use only.** Any agent that launches sub-agents reads this registry to resolve compact rules, then injects them directly into sub-agent prompts. Sub-agents still read their assigned executor/phase skill. During normal runtime, they do NOT independently discover or load additional project/user SKILL.md files or this registry; explicit fallback loading is degraded self-healing and must be reported in `skill_resolution`.
 
 See `_shared/skill-resolver.md` for the full resolution protocol.
 
@@ -186,7 +186,7 @@ mem_save(
 | {file} | {path} |
 
 ### Next Steps
-The orchestrator reads this registry once per session and passes pre-resolved skill paths to sub-agents via their launch prompts.
+The orchestrator reads this registry once per session and passes pre-resolved compact rules to sub-agents via their launch prompts.
 To update after installing/removing skills, run this again.
 ```
 

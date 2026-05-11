@@ -48,4 +48,4 @@ Return a structured result with these fields:
 - `artifacts`: topic_keys or file paths written (e.g. `sdd/{change-name}/verify-report`)
 - `next_recommended`: `sdd-archive` (if PASS) or `sdd-apply` (if FAIL/blockers found)
 - `risks`: CRITICAL issues (must fix) and WARNINGs (should fix)
-- `skill_resolution`: `injected` if compact rules were provided in invocation message, otherwise `none`
+- `skill_resolution`: `injected` if compact rules were provided in the invocation message; `fallback-registry` or `fallback-path` only when explicitly self-healing from a missing Project Standards block; otherwise `none`

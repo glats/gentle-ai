@@ -6,7 +6,7 @@ Executor boundary: every SDD phase agent is an EXECUTOR, not an orchestrator. Do
 
 ## A. Skill Loading
 
-1. Check if the orchestrator injected a `## Project Standards (auto-resolved)` block in your launch prompt. If yes, follow those rules — they are pre-digested compact rules from the skill registry. **Do NOT read any SKILL.md files.**
+1. Check if the orchestrator injected a `## Project Standards (auto-resolved)` block in your launch prompt. If yes, follow those rules — they are pre-digested compact rules from the skill registry. **Do NOT independently discover or load additional project/user SKILL.md files.** Continue to follow your assigned executor/phase skill.
 2. If no Project Standards block was provided, check for `SKILL: Load` instructions. If present, load those exact skill files.
 3. If neither was provided, search for the skill registry as a fallback:
    a. `mem_search(query: "skill-registry", project: "{project}")` — if found, `mem_get_observation(id)` for full content
@@ -14,7 +14,7 @@ Executor boundary: every SDD phase agent is an EXECUTOR, not an orchestrator. Do
    c. From the registry's **Compact Rules** section, apply rules whose triggers match your current task.
 4. If no registry exists, proceed with your phase skill only.
 
-NOTE: the preferred path is (1) — compact rules pre-injected by the orchestrator. Paths (2) and (3) are fallbacks for backwards compatibility. Searching the registry is SKILL LOADING, not delegation. If `## Project Standards` is present, IGNORE any `SKILL: Load` instructions — they are redundant.
+NOTE: the preferred path is (1) — compact rules pre-injected by the orchestrator. Paths (2) and (3) are explicit self-healing fallbacks for backwards compatibility when the orchestrator failed to provide Project Standards. Treat them as degraded-but-auditable behavior: report `fallback-path` or `fallback-registry` in `skill_resolution`. Searching the registry is SKILL LOADING, not delegation. If `## Project Standards` is present, IGNORE any `SKILL: Load` instructions — they are redundant.
 
 ## B. Artifact Retrieval (Engram Mode)
 
@@ -76,7 +76,7 @@ Every phase MUST return a structured envelope to the orchestrator:
 - `artifacts`: list of artifact keys/paths written
 - `next_recommended`: the next SDD phase to run, or "none"
 - `risks`: risks discovered, or "None"
-- `skill_resolution`: how skills were loaded — `injected` (received Project Standards from orchestrator), `fallback-registry` (self-loaded from registry), `fallback-path` (loaded via SKILL: Load path), or `none` (no skills loaded)
+- `skill_resolution`: how project/user skills were loaded — `injected` (received Project Standards from orchestrator), `fallback-registry` (self-loaded compact rules from registry because Project Standards were missing), `fallback-path` (loaded explicit SKILL: Load paths because Project Standards were missing), or `none` (no project/user skills loaded)
 
 Example:
 

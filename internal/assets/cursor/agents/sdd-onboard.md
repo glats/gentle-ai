@@ -40,4 +40,4 @@ Return a structured result with these fields:
 - `artifacts`: list of paths or topic_keys written
 - `next_recommended`: `sdd-new` (to start a real change independently)
 - `risks`: any warnings about the onboarding session
-- `skill_resolution`: `injected` if compact rules were provided in invocation message, otherwise `none`
+- `skill_resolution`: `injected` if compact rules were provided in the invocation message; `fallback-registry` or `fallback-path` only when explicitly self-healing from a missing Project Standards block; otherwise `none`

@@ -41,4 +41,4 @@ Return a structured result with these fields:
 - `artifacts`: topic_keys or file paths written (e.g. `sdd/{change-name}/spec`)
 - `next_recommended`: `sdd-tasks` (after design is also ready)
 - `risks`: ambiguities in the proposal that forced spec-level assumptions
-- `skill_resolution`: `injected` if compact rules were provided in invocation message, otherwise `none`
+- `skill_resolution`: `injected` if compact rules were provided in the invocation message; `fallback-registry` or `fallback-path` only when explicitly self-healing from a missing Project Standards block; otherwise `none`

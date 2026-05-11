@@ -167,7 +167,7 @@ For each sub-agent launch:
 2. Copy matching compact rule blocks into the sub-agent prompt as `## Project Standards (auto-resolved)`
 3. Inject BEFORE the sub-agent's task-specific instructions
 
-**Key rule**: inject compact rules TEXT, not paths. Sub-agents do NOT read SKILL.md files or the registry — rules arrive pre-digested. This is compaction-safe because each delegation re-reads the registry if the cache is lost.
+**Key rule**: inject compact rules TEXT, not paths. Sub-agents still read their assigned executor/phase skill. During normal runtime, they do NOT independently discover or load additional project/user SKILL.md files or the registry — those rules arrive pre-digested. This is compaction-safe because each delegation re-reads the registry if the cache is lost.
 
 ### Skill Resolution Feedback
 
@@ -186,7 +186,7 @@ Sub-agents get a fresh context with NO memory. The orchestrator controls context
 - Read context: orchestrator searches engram (`mem_search`) for relevant prior context and passes it in the sub-agent prompt. Sub-agent does NOT search engram itself.
 - Write context: sub-agent MUST save significant discoveries, decisions, or bug fixes to engram via `mem_save` before returning. Sub-agent has full detail — save before returning, not after.
 - Always add to sub-agent prompt: `"If you make important discoveries, decisions, or fix bugs, save them to engram via mem_save with project: '{project}'."`
-- Skills: orchestrator resolves compact rules from the registry and injects them as `## Project Standards (auto-resolved)` in the sub-agent prompt. Sub-agents do NOT read SKILL.md files or the registry — they receive rules pre-digested.
+- Skills: orchestrator resolves compact rules from the registry and injects them as `## Project Standards (auto-resolved)` in the sub-agent prompt. Sub-agents still read their assigned executor/phase skill. During normal runtime, they do NOT independently discover or load additional project/user SKILL.md files or the registry — those rules arrive pre-digested.
 
 #### SDD Phases
 

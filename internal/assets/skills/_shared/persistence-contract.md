@@ -139,11 +139,11 @@ For SDD artifacts, `capture_prompt: false` is explicit and mandatory when the En
 
 ## Skill Registry
 
-The orchestrator pre-resolves compact rules from the skill registry and injects them as `## Project Standards (auto-resolved)` in your launch prompt. Sub-agents do NOT read the registry or individual SKILL.md files — rules arrive pre-digested.
+The orchestrator pre-resolves compact rules from the skill registry and injects them as `## Project Standards (auto-resolved)` in your launch prompt. Sub-agents still read their assigned executor/phase skill. They do NOT independently discover or load additional project/user SKILL.md files or the registry during normal runtime — rules arrive pre-digested.
 
 To generate/update: run the `skill-registry` skill, or run `sdd-init`.
 
-Sub-agent skill loading: check for a `## Project Standards (auto-resolved)` block in your prompt — if present, follow those rules. If not present, check for `SKILL: Load` instructions as a fallback. If neither exists, proceed without — this is not an error.
+Sub-agent skill loading: check for a `## Project Standards (auto-resolved)` block in your prompt — if present, follow those rules. If not present, check for `SKILL: Load` instructions as an explicit self-healing fallback and report `fallback-path`. If neither exists, proceed without project/user skills and report `none` — this is degraded but not an execution error.
 
 ## Detail Level
 
