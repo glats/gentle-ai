@@ -24,16 +24,6 @@
     .\install.ps1 -Method binary -Insecure
 #>
 
-[CmdletBinding()]
-param(
-    [ValidateSet("auto", "go", "binary")]
-    [string]$Method = "auto",
-
-    [string]$InstallDir = "",
-
-    [switch]$Insecure
-)
-
 $ErrorActionPreference = "Stop"
 
 $GITHUB_OWNER = "Gentleman-Programming"
@@ -342,6 +332,16 @@ function Show-NextSteps {
 # ============================================================================
 
 function Main {
+    [CmdletBinding()]
+    param(
+        [ValidateSet("auto", "go", "binary")]
+        [string]$Method = "auto",
+
+        [string]$InstallDir = "",
+
+        [switch]$Insecure
+    )
+
     Show-Banner
 
     $arch = Get-Platform
@@ -358,4 +358,4 @@ function Main {
     Show-NextSteps
 }
 
-Main
+Main @args
