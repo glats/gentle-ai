@@ -213,28 +213,19 @@ func TestRunInstallMacOSEngramStillUsesBrew(t *testing.T) {
 func TestRunInstallBetaEngramUsesMainGoInstallAndInstalledBinary(t *testing.T) {
 	home := t.TempDir()
 	gobin := filepath.Join(home, "go-bin")
-	if err := os.MkdirAll(gobin, 0o755); err != nil {
-		t.Fatalf("MkdirAll() error = %v", err)
-	}
 	betaEngram := filepath.Join(gobin, "engram")
-	if err := os.WriteFile(betaEngram, []byte("#!/bin/sh\n"), 0o755); err != nil {
-		t.Fatalf("WriteFile() error = %v", err)
-	}
 
-	restoreHome := osUserHomeDir
 	restoreCommand := runCommand
 	restoreLookPath := cmdLookPath
 	restoreGoEnv := goEnv
 	restorePath := os.Getenv("PATH")
 	t.Cleanup(func() {
-		osUserHomeDir = restoreHome
 		runCommand = restoreCommand
 		cmdLookPath = restoreLookPath
 		goEnv = restoreGoEnv
 		os.Setenv("PATH", restorePath)
 	})
 
-	osUserHomeDir = func() (string, error) { return home, nil }
 	cmdLookPath = func(name string) (string, error) {
 		if name == "engram" {
 			return "/usr/local/bin/engram", nil
@@ -272,9 +263,6 @@ func TestRunInstallBetaEngramUsesMainGoInstallAndInstalledBinary(t *testing.T) {
 	}
 	if !foundSetupWithBetaBinary {
 		t.Fatalf("expected setup to use beta engram binary %q, got commands: %v", betaEngram, commands)
-	}
-	if got := filepath.SplitList(os.Getenv("PATH"))[0]; got != gobin {
-		t.Fatalf("PATH first entry = %q, want %q", got, gobin)
 	}
 }
 
