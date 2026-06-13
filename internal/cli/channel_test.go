@@ -24,28 +24,19 @@ func TestResolveInstallChannel(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+			t.Run(tt.name, func(t *testing.T) {
 			t.Setenv(channelEnvVar, tt.envValue)
 
 			got, err := ResolveInstallChannel(tt.flagValue)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("ResolveInstallChannel(%q) error = %v, wantErr %v", tt.flagValue, err, tt.wantErr)
 			}
+			if tt.wantErr && !strings.Contains(err.Error(), "nightly") {
+				t.Fatalf("error = %q, want nightly mentioned", err.Error())
+			}
 			if got != tt.want {
 				t.Fatalf("ResolveInstallChannel(%q) = %q, want %q", tt.flagValue, got, tt.want)
 			}
 		})
-	}
-}
-
-func TestResolveInstallChannelInvalidErrorMentionsNightly(t *testing.T) {
-	t.Setenv(channelEnvVar, "")
-
-	_, err := ResolveInstallChannel("engram-beta")
-	if err == nil {
-		t.Fatal("ResolveInstallChannel() expected error")
-	}
-	if !strings.Contains(err.Error(), "nightly") {
-		t.Fatalf("error = %q, want nightly mentioned", err.Error())
 	}
 }
