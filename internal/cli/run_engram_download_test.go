@@ -210,5 +210,73 @@ func TestRunInstallMacOSEngramStillUsesBrew(t *testing.T) {
 	}
 }
 
+func TestRunInstallBetaEngramUsesMainGoInstallAndInstalledBinary(t *testing.T) {
+	home := t.TempDir()
+	gobin := filepath.Join(home, "go-bin")
+	if err := os.MkdirAll(gobin, 0o755); err != nil {
+		t.Fatalf("MkdirAll() error = %v", err)
+	}
+	betaEngram := filepath.Join(gobin, "engram")
+	if err := os.WriteFile(betaEngram, []byte("#!/bin/sh\n"), 0o755); err != nil {
+		t.Fatalf("WriteFile() error = %v", err)
+	}
+
+	restoreHome := osUserHomeDir
+	restoreCommand := runCommand
+	restoreLookPath := cmdLookPath
+	restoreGoEnv := goEnv
+	restorePath := os.Getenv("PATH")
+	t.Cleanup(func() {
+		osUserHomeDir = restoreHome
+		runCommand = restoreCommand
+		cmdLookPath = restoreLookPath
+		goEnv = restoreGoEnv
+		os.Setenv("PATH", restorePath)
+	})
+
+	osUserHomeDir = func() (string, error) { return home, nil }
+	cmdLookPath = func(name string) (string, error) {
+		if name == "engram" {
+			return "/usr/local/bin/engram", nil
+		}
+		return missingBinaryLookPath(name)
+	}
+	goEnv = func(keys ...string) (map[string]string, error) {
+		return map[string]string{"GOBIN": gobin, "GOPATH": filepath.Join(home, "go")}, nil
+	}
+	recorder := &commandRecorder{}
+	runCommand = recorder.record
+
+	detection := linuxDetectionResult(system.LinuxDistroUbuntu, "apt")
+	_, err := RunInstall(
+		[]string{"--agent", "opencode", "--component", "engram", "--channel", "beta"},
+		detection,
+	)
+	if err != nil {
+		t.Fatalf("RunInstall() error = %v", err)
+	}
+
+	commands := recorder.get()
+	foundGoInstall := false
+	foundSetupWithBetaBinary := false
+	for _, cmd := range commands {
+		if cmd == "go install github.com/Gentleman-Programming/engram/cmd/engram@main" {
+			foundGoInstall = true
+		}
+		if strings.HasPrefix(cmd, betaEngram+" setup ") {
+			foundSetupWithBetaBinary = true
+		}
+	}
+	if !foundGoInstall {
+		t.Fatalf("expected beta engram go install from main, got commands: %v", commands)
+	}
+	if !foundSetupWithBetaBinary {
+		t.Fatalf("expected setup to use beta engram binary %q, got commands: %v", betaEngram, commands)
+	}
+	if got := filepath.SplitList(os.Getenv("PATH"))[0]; got != gobin {
+		t.Fatalf("PATH first entry = %q, want %q", got, gobin)
+	}
+}
+
 // Make sure the engram package's DownloadLatestBinary is accessible.
 var _ = engram.DownloadLatestBinary
