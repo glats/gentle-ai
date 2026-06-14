@@ -88,7 +88,7 @@ nextRecommended: propose | spec | design | tasks | apply | verify | archive | sd
 blockedReasons: []
 ```
 
-`phaseInstructions` is optional and appears only when instructions are requested. Empty path fields MUST be arrays, not null. `changeName` and `changeRoot` are nullable; all other sections should be present in fallback output so consumers can parse native and manual status the same way. Native status currently emits `artifactStore: openspec`; if native adds store modes later, fallback output must mirror the native token.
+`phaseInstructions` is optional and appears only when instructions are requested. It carries only execution-phase keys (`apply`, `verify`, `archive`); planning-phase instructions (`propose`, `spec`, `design`, `tasks`) are surfaced in the dispatcher markdown, not this JSON map, so a consumer routing on a planning `nextRecommended` MUST NOT expect a matching `phaseInstructions` entry. Empty path fields MUST be arrays, not null. `changeName` and `changeRoot` are nullable; all other sections should be present in fallback output so consumers can parse native and manual status the same way. Native status currently emits `artifactStore: openspec`; if native adds store modes later, fallback output must mirror the native token.
 
 ## Apply State
 

@@ -784,7 +784,7 @@ func artifactDependency(state ArtifactState) DependencyState {
 	return DependencyBlocked
 }
 
-func resolveNextRecommended(dependencies Dependencies, applyState ApplyState, blockedReasons []string) string {
+func resolveNextRecommended(dependencies Dependencies, applyState ApplyState, _ []string) string {
 	// Prefer apply over verify when there is still remaining implementation work.
 	if dependencies.Apply == DependencyReady {
 		return string(PhaseApply)
