@@ -263,8 +263,8 @@ Hermes uses `delegate_task` to spawn ephemeral sub-agents. Each worker starts in
 
 | Parameter | Default | Effect |
 |-----------|---------|--------|
-| `delegation.max_spawn_depth` | 2 | Maximum recursive delegation depth |
-| `delegation.max_concurrent_children` | 4 | Maximum parallel workers |
+| `max_spawn_depth` | 2 | Maximum recursive delegation depth |
+| `max_concurrent_children` | 4 | Maximum parallel workers |
 | `max_iterations` | agent default | Iteration budget per worker |
 | `child_timeout_seconds` | agent default | Hard timeout per worker |
 | `inherit_mcp_toolsets` | false | When true, workers inherit parent MCP toolsets automatically |

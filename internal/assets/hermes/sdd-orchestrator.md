@@ -13,8 +13,8 @@ The native delegation primitive in Hermes is `delegate_task`. Use it to spawn ep
 - Workers are ephemeral by default. Do NOT request persistent agent files or profiles unless the user explicitly asks for persistent agents.
 
 **Tuning knobs** (configure in `~/.hermes/config.yaml` under the `delegation` key, or pass per-call):
-- `delegation.max_spawn_depth` — maximum recursive depth (default: 2; set 1 to prevent workers from spawning workers)
-- `delegation.max_concurrent_children` — maximum parallel workers (default: 4)
+- `max_spawn_depth` — maximum recursive depth (default: 2; set 1 to prevent workers from spawning workers)
+- `max_concurrent_children` — maximum parallel workers (default: 4)
 - `max_iterations` — iteration budget per worker
 - `child_timeout_seconds` — hard timeout per worker
 - `inherit_mcp_toolsets` — when false (default), toolsets must be passed explicitly in the mission

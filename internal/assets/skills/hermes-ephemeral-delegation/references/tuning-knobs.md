@@ -4,8 +4,8 @@ Configure these in `~/.hermes/config.yaml` under the `delegation` key, or pass p
 
 | Parameter | Default | Effect |
 |-----------|---------|--------|
-| `delegation.max_spawn_depth` | 2 | Maximum recursive delegation depth. Set to 1 to prevent workers from spawning their own workers. |
-| `delegation.max_concurrent_children` | 4 | Maximum number of parallel workers active at once. |
+| `max_spawn_depth` | 2 | Maximum recursive delegation depth. Set to 1 to prevent workers from spawning their own workers. |
+| `max_concurrent_children` | 4 | Maximum number of parallel workers active at once. |
 | `max_iterations` | agent default | Iteration budget for each worker before it is forced to return. |
 | `child_timeout_seconds` | agent default | Hard wall-clock timeout per worker. |
 | `inherit_mcp_toolsets` | false | When true, workers inherit the parent's MCP toolsets automatically. When false (default), pass toolsets explicitly in the mission. |
