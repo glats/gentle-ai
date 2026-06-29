@@ -107,3 +107,7 @@ SDD must protect reviewer cognitive load, not only generate tasks.
 - In a Feature Branch Chain, PR #1 targets the feature/tracker branch and later child PRs target the immediate previous PR branch; if GitHub shows previous slices in a child diff, retarget/rebase until the diff is clean.
 
 This guard exists to reduce reviewer burnout and keep implementation delivery safe. Do not treat it as optional process noise.
+
+**Filesystem path convention**: The SDD artifact directory is `openspec/`.
+Do NOT use `sdd/`, `.sdd/`, or `sdds/` as filesystem paths — these do not
+exist. Engram topic keys use the `sdd/` prefix for memory organization only.

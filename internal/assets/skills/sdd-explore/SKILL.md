@@ -56,6 +56,10 @@ The orchestrator will give you:
 - **openspec**: Read `openspec/config.yaml` and `openspec/specs/`.
 - **none**: Use whatever context the orchestrator passed in the prompt.
 
+**Filesystem path convention**: The SDD artifact directory is `openspec/`.
+Do NOT use `sdd/`, `.sdd/`, or `sdds/` as filesystem paths — these do not
+exist. Engram topic keys use the `sdd/` prefix for memory organization only.
+
 ## What to Do
 
 ### Step 1: Load Skills

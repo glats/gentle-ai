@@ -215,4 +215,8 @@ Este workflow se considera correctamente ejecutado solo si:
 
 Si cualquiera de esos puntos no ocurre, el workflow está mal ejecutado.
 
-
+> **Filesystem path convention (Windsurf IDE)**: `.sdd/` is the Windsurf IDE
+> artifact directory for SDD planning contracts. In non-Windsurf environments
+> (OpenCode, generic CLI), the canonical filesystem directory is `openspec/`.
+> Do NOT use `.sdd/` outside Windsurf workflows, and do NOT confuse Engram
+> topic keys (prefix `sdd/`, no dot) with filesystem paths.

@@ -43,6 +43,10 @@ Run this phase when the orchestrator/user asks to initialize SDD in a project. Y
 - Use `capture_prompt: false` for automated SDD/config saves when supported; omit it if the tool schema lacks it.
 - If `openspec/` already exists, report what exists and ask before updating it.
 
+**Filesystem path convention**: The SDD artifact directory is `openspec/`.
+Do NOT use `sdd/`, `.sdd/`, or `sdds/` as filesystem paths — these do not
+exist. Engram topic keys use the `sdd/` prefix for memory organization only.
+
 ## Decision Gates
 
 | Input | Action |

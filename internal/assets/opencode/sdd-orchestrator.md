@@ -73,6 +73,11 @@ SDD is the structured planning layer for substantial changes.
 - `hybrid` -> both backends; cross-session recovery + local files; more tokens per operation
 - `none` -> return results inline only; recommend enabling engram or openspec
 
+> **Filesystem path convention**: Engram topic keys use the `sdd/` prefix for
+> memory organization — this is NOT a filesystem path. The canonical filesystem
+> directory for SDD artifacts is `openspec/`. Never reference `.sdd/`, `sdds/`,
+> or bare `sdd/` as filesystem paths. These do not exist.
+
 ### Commands
 
 Skills (appear in autocomplete):
