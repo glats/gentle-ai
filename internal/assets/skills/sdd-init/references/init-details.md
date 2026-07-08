@@ -93,6 +93,19 @@ openspec/
 | Formatter    | ✅ / ❌   | {command or —} |
 ```
 
+## Mode Selection Question Template
+
+Use this EXACT question when `artifact_store.mode` was NOT passed by the orchestrator:
+
+```
+Where should SDD artifacts (proposals, specs, designs, tasks) be persisted?
+1. Hybrid - Engram + openspec/ (Recommended)
+2. Engram only
+3. openspec/ only
+```
+
+**CRITICAL**: `openspec/` is the canonical filesystem path. Do NOT substitute `sdds/`, `sdd/`, or `.sdd/`. Engram topic keys use the `sdd/` prefix for memory organization only.
+
 ## Output Templates
 
 For each mode, include project, stack, persistence, Strict TDD Mode, Testing Capabilities table, artifacts created/saved, limitations where relevant, and next steps. Engram mode must mention local/non-shareable limitations; none mode must recommend enabling persistence.
