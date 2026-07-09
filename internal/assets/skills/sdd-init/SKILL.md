@@ -63,7 +63,12 @@ Run this phase when the orchestrator/user asks to initialize SDD in a project. Y
 3. Resolve Strict TDD from agent marker, `openspec/config.yaml`, detected runner fallback, or no-runner fallback.
 3.5. Resolve artifact store mode if not passed by orchestrator:
     - If `artifact_store.mode` was provided (engram/openspec/hybrid/none), skip this step.
-    - If NOT provided, ask the user using the EXACT question template in `references/init-details.md` section "Mode Selection Question Template". Use `openspec/` as the filesystem label — NEVER `sdds/`, `sdd/`, or `.sdd/`.
+    - If NOT provided, ask the user with this EXACT question:
+      "Where should SDD artifacts (proposals, specs, designs, tasks) be persisted?
+       1. Hybrid - Engram + openspec/ (Recommended)
+       2. Engram only
+       3. openspec/ only"
+      Use `openspec/` as the filesystem label — NEVER `sdds/`, `sdd/`, or `.sdd/`.
 4. Initialize persistence for the resolved mode.
 5. Build `.atl/skill-registry.md` using the skill-registry scan rules.
 6. Persist testing capabilities and project context.
